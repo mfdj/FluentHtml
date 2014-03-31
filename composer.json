@@ -1,0 +1,17 @@
+{
+    "name": "mfdj/fluenthtml",
+    "license": "DoItToIt",
+    "authors": [
+        {
+            "name": "Mark Fox",
+            "email": "mf@ixel.org"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    }
+}

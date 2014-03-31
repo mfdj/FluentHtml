@@ -47,7 +47,7 @@ trait Generic
      */
     public static function container($tag, $inner, $attributes = null)
     {
-        $name = self::stripAngles($name);
+        $name = self::stripAngles($tag);
 
         return "<$name" . ($attributes ? " $attributes" : '') . '>' . $inner . "</$name>";
     }
@@ -77,12 +77,13 @@ trait Generic
      * @param array $innerCollection
      * @return string
      */
-    public static function tagEach($tag, array $innerCollection)
+    public static function tagEach($tag, array $innerCollection, $attributes = null)
     {
+        $name = self::stripAngles($tag);
         $markup = '';
 
         foreach ($innerCollection as $inner)
-            $markup .= self::tag($tag, $inner);
+            $markup .= "<$name" . ($attributes ? " $attributes" : '') . '>' . $inner . "</$name>";
 
         return $markup;
     }

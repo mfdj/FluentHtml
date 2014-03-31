@@ -14,7 +14,8 @@ use FluentHtml\Factory\Generic;
 
 class FluentHtml
 {
-    use Fluency, Generics, Basics, Forms, Inputs, HB5s, BonusTags, BonusContainers
+    use Fluency,
+        Generics, Basics, Forms, Inputs, HB5s, BonusTags, BonusContainers
     {
         Fluency::append insteadof Generics;
         Fluency::append insteadof Basics;
@@ -38,9 +39,9 @@ class FluentHtml
         }
     }
 
-    public static function make($rootTag = null, $attributes = null)
+    public static function make($container = null, $attributes = null)
     {
-        return new self($rootTag, $attributes);
+        return new self($container, $attributes);
     }
 
     public function __toString()

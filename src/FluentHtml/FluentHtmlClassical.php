@@ -18,25 +18,25 @@ class FluentHtmlClassical extends AbstractFluent
 
     private $root;
 
-    public function __construct($rootTag = null, $attributes = null)
+    public function __construct($container = null, $attributes = null)
     {
-        if ($rootTag)
+        if ($container)
         {
-            $this->root = Generic::stripAngles($rootTag);
+            $this->root = Generic::stripAngles($container);
             $this->append(
                 Generic::open($this->root, $attributes)
             );
         }
     }
 
+    public static function make($container = null, $attributes = null)
+    {
+        return new self($container, $attributes);
+    }
+
     public function append($markup)
     {
         return parent::append($markup);
-    }
-
-    public static function make($rootTag = null, $attributes = null)
-    {
-        return new self($rootTag, $attributes);
     }
 
     public function __toString()

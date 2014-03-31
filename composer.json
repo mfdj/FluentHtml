@@ -1,6 +1,7 @@
 {
     "name": "mfdj/fluenthtml",
     "license": "DoItToIt",
+    "description": "stupid simple html creation using pure php",
     "authors": [
         {
             "name": "Mark Fox",

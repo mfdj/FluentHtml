@@ -60,7 +60,7 @@ MARKUP
         );
     }
 
-    public function anchor($href, $inner = null, $target = null)
+    public function a($href, $inner = null, $target = null)
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/a

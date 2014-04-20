@@ -8,6 +8,7 @@ header('Content-type: text/plain;');
 
 $html = new FluentHtml('div', 'class="one"');
 
+// disbaling the buffer breaks initial containers… hmmm
 $html
-    ->useBuffer(false)
-    ->h1('funk paradize');
+    ->h1('funk paradize')
+    ->useBuffer(false);

@@ -4,9 +4,9 @@ namespace FluentHtml\Base;
 
 abstract class AbstractAppend
 {
-    protected $markup = '';
+    protected $product = '';
     protected $buffer = '';
-    protected $echo = false;
+    protected $buffered = true;
 
     /**
      * @param $markup
@@ -14,30 +14,54 @@ abstract class AbstractAppend
      */
     public function append($markup)
     {
-        $this->markup .= $this->buffer;
-        $this->buffer = $markup;
+        if (!$this->buffered)
+            echo $markup;
+        else
+        {
+            $this->product .= $this->buffer;
+            $this->buffer = $markup;
+        }
 
         return $this;
     }
 
-    public function __toString()
+    /**
+     * Disabling the buffer immediately echos content.
+     *
+     * @param bool $enable
+     */
+    public function useBuffer($enable = true)
     {
-        return $this->getMarkup();
+        if (!$enable)
+            $this->flushProduct();
+
+        $this->buffered = $enable;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function flushProduct()
+    {
+        echo $this->getProduct();
+
+        $this->product = $this->buffer = null;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    public function getMarkup()
+    public function getProduct()
     {
-        return $this->markup . $this->buffer;
+        return $this->product . $this->buffer;
     }
 
-    /**
-     * @param callback $callback
-     */
-    public function modifyBuffer(callback $callback)
+    public function __toString()
     {
-        // ToDo
+        return $this->getProduct();
     }
 } 

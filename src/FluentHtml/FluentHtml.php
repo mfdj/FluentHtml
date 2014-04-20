@@ -8,18 +8,18 @@ use FluentHtml\Extension\Basics;
 use FluentHtml\Extension\Containers;
 use FluentHtml\Extension\Tags;
 use FluentHtml\Extension\Forms;
-use FluentHtml\Extension\HB5s;
+use FluentHtml\Extension\HB5;
 use FluentHtml\Extension\Inputs;
 
 class FluentHtml
 {
     use Appendable, HtmlCore,
-        Basics, Forms, Inputs, HB5s, Tags, Containers
+        Basics, Forms, Inputs, HB5, Tags, Containers
     {
         Appendable::append insteadof Basics;
         Appendable::append insteadof Forms;
         Appendable::append insteadof Inputs;
-        Appendable::append insteadof HB5s;
+        Appendable::append insteadof HB5;
         Appendable::append insteadof Tags;
         Appendable::append insteadof Containers;
         Appendable::getProduct as appendableGetProduct;

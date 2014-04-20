@@ -2,19 +2,18 @@
 
 namespace FluentHtml;
 
-use FluentHtml\Adaptor\Basics;
-use FluentHtml\Adaptor\BonusContainers;
-use FluentHtml\Adaptor\BonusTags;
-use FluentHtml\Adaptor\Forms;
-use FluentHtml\Adaptor\Generics;
-use FluentHtml\Adaptor\HB5s;
-use FluentHtml\Adaptor\Inputs;
 use FluentHtml\Base\AbstractAppend;
-use FluentHtml\Factory\Generic;
+use FluentHtml\Base\HtmlCore;
+use FluentHtml\Extension\Basics;
+use FluentHtml\Extension\Containers;
+use FluentHtml\Extension\Forms;
+use FluentHtml\Extension\HB5;
+use FluentHtml\Extension\Inputs;
+use FluentHtml\Extension\Tags;
 
-class AppendHtmlClassical extends AbstractAppend
+class FluentHtmlClassical extends AbstractAppend
 {
-    use Generics, Basics, Forms, Inputs, HB5s, BonusTags, BonusContainers;
+    use HtmlCore, Basics, Forms, Inputs, HB5, Tags, Containers;
 
     private $root;
 
@@ -22,10 +21,8 @@ class AppendHtmlClassical extends AbstractAppend
     {
         if ($container)
         {
-            $this->root = Generic::stripAngles($container);
-            $this->append(
-                Generic::open($this->root, $attributes)
-            );
+            $this->root = $this->stripAngles($container);
+            $this->open($this->root, $attributes);
         }
     }
 
@@ -39,11 +36,11 @@ class AppendHtmlClassical extends AbstractAppend
         return parent::append($markup);
     }
 
-    public function __toString()
+    public function getProduct()
     {
         if ($this->root)
-            return $this->getMarkup() . Generic::close($this->root);
+            return parent::getProduct() . "</" . $this->root . ">";
 
-        return $this->getMarkup();
+        return parent::getProduct();
     }
 }

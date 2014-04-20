@@ -5,7 +5,7 @@ namespace FluentHtml\Extension;
 /**
  * http://html5boilerplate.com/
  */
-trait HB5s
+trait HB5
 {
     /**
      * see: Appendable::append()

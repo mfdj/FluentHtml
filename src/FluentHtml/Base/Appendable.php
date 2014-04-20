@@ -26,6 +26,8 @@ trait Appendable
     }
 
     /**
+     * Disabling the buffer immediately echos content.
+     *
      * @param bool $enable
      */
     public function useBuffer($enable = true)

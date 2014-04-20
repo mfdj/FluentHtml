@@ -2,28 +2,27 @@
 
 namespace FluentHtml;
 
-use FluentHtml\Adaptor\Basics;
-use FluentHtml\Adaptor\BonusContainers;
-use FluentHtml\Adaptor\BonusTags;
-use FluentHtml\Adaptor\Forms;
-use FluentHtml\Adaptor\Generics;
-use FluentHtml\Adaptor\HB5s;
-use FluentHtml\Adaptor\Inputs;
-use FluentHtml\Base\Fluency;
-use FluentHtml\Factory\Generic;
+use FluentHtml\Base\Appendable;
+use FluentHtml\Base\HtmlCore;
+use FluentHtml\Extension\Basics;
+use FluentHtml\Extension\Containers;
+use FluentHtml\Extension\Tags;
+use FluentHtml\Extension\Forms;
+use FluentHtml\Extension\HB5s;
+use FluentHtml\Extension\Inputs;
 
 class FluentHtml
 {
-    use Fluency,
-        Generics, Basics, Forms, Inputs, HB5s, BonusTags, BonusContainers
+    use Appendable, HtmlCore,
+        Basics, Forms, Inputs, HB5s, Tags, Containers
     {
-        Fluency::append insteadof Generics;
-        Fluency::append insteadof Basics;
-        Fluency::append insteadof Forms;
-        Fluency::append insteadof Inputs;
-        Fluency::append insteadof HB5s;
-        Fluency::append insteadof BonusTags;
-        Fluency::append insteadof BonusContainers;
+        Appendable::append insteadof Basics;
+        Appendable::append insteadof Forms;
+        Appendable::append insteadof Inputs;
+        Appendable::append insteadof HB5s;
+        Appendable::append insteadof Tags;
+        Appendable::append insteadof Containers;
+        Appendable::getProduct as appendableGetProduct;
     }
 
     private $root;
@@ -32,10 +31,8 @@ class FluentHtml
     {
         if ($container)
         {
-            $this->root = Generic::stripAngles($container);
-            $this->append(
-                Generic::open($this->root, $attributes)
-            );
+            $this->root = $this->stripAngles($container);
+            $this->open($this->root, $attributes);
         }
     }
 
@@ -44,11 +41,11 @@ class FluentHtml
         return new self($container, $attributes);
     }
 
-    public function __toString()
+    public function getProduct()
     {
         if ($this->root)
-            return $this->getMarkup() . Generic::close($this->root);
+            return $this->appendableGetProduct() . "</" . $this->root . ">";
 
-        return $this->getMarkup();
+        return $this->appendableGetProduct();
     }
 }

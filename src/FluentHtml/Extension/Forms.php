@@ -1,10 +1,20 @@
 <?php
 
-namespace FluentHtml\Factory;
+namespace FluentHtml\Extension;
 
-trait Form
+/**
+ *
+ */
+trait Forms
 {
-    public static function start($id, $action = '', $method = 'POST', $target = '_self')
+    /**
+     * see: Appendable::append()
+     * @param  string $markup new markup
+     * @return $this
+     */
+    abstract public function append($markup);
+
+    public function start($id, $action = '', $method = 'POST', $target = '_self')
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/form
@@ -14,43 +24,47 @@ trait Form
          * • enctype (for method post)
          * • novalidate
          */
-        return "<form id='$id' action='$action' method='$method' target='$target'>";
+        return $this->append(
+            "<form id='$id' action='$action' method='$method' target='$target'>"
+        );
     }
 
-    public static function label($inner, $for)
+    public function label($inner, $for = null)
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/label
          * Missing: accesskey, form
          */
         if ($for)
-            return "<label for='$for'>" . htmlentities($inner) . '</label>';
+            return $this->append("<label for='$for'>" . htmlentities($inner) . '</label>');
         else
-            return "<label>" . $inner . '</label>';
+            return $this->append("<label>" . $inner . '</label>');
     }
 
-    public static function input($type, $name, $value = null)
+    public function input($type, $name, $value = null)
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/input
          * Missing: accept, autocomplete, autofocus, autosave, disabled,
          *   formaction, formenctype, formmethod, formnovalidate, formtarget (form* all override the parent form)
          */
-        return "<input name='$name' type='$type'"
-        . ($form ? " form='$form'" : '')
-        . ($value ? " value='$value'" : '')
-        . '>';
+        return $this->append(
+            "<input name='$name' type='$type'"
+            . ($form ? " form='$form'" : '')
+            . ($value ? " value='$value'" : '')
+            . '>'
+        );
     }
 
-    public static function button($name, $type = 'submit', $inner = 'submit')
+    public function button($name, $type = 'submit', $inner = 'submit')
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/button
          */
-        return "<button name='$name' type='$type'>$inner</button>";
+        return $this->append("<button name='$name' type='$type'>$inner</button>");
     }
 
-    public static function textarea($name, $inner, $rows = 3, $cols = 20)
+    public function textarea($name, $inner, $rows = 3, $cols = 20)
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/textarea
@@ -58,29 +72,36 @@ trait Form
          *   required, selectionDirection, selectionEnd, selectionStart, spellcheck,
          *   wrap
          */
-        return "<textarea name='$name' rows='$rows' cols='$cols'>"
-        . htmlentities($inner) . "</textarea>";
+        return $this->append(
+            "<textarea name='$name' rows='$rows' cols='$cols'>"
+            . htmlentities($inner)
+            . "</textarea>"
+        );
     }
 
-    public static function select($name, $inner)
+    public function select($name, $inner)
     {
         /**
          * See: https://developer.mozilla.org/en-US/docs/Web/Traits/Element/select
          * Missing: autofocus, disabled, form, multiple, required, size
          */
-        return "<select name='$name'>"
-        . htmlentities($inner) . '</select>';
+        return $this->append(
+            "<select name='$name'>" . htmlentities($inner) . '</select>'
+        );
     }
 
-    public static function option($value, $inner = null, $isSelected = false)
+    public function option($value, $inner = null, $isSelected = false)
     {
-        return "<option value='$value'"
-        . ($isSelected ? ' selected' : '')
-        . '>'
-        . htmlentities($inner ? $inner : $value) . '</option>';
+        return $this->append(
+            "<option value='$value'"
+            . ($isSelected ? ' selected' : '')
+            . '>'
+            . htmlentities($inner ? $inner : $value)
+            . '</option>'
+        );
     }
 
-    public static function options(array $values, array $labels = null, $selectedValue = null)
+    public function options(array $values, array $labels = null, $selectedValue = null)
     {
         $markup = '';
 
@@ -97,6 +118,6 @@ trait Form
                 . htmlentities($inner ? $inner : $value) . '</option>';
         }
 
-        return $markup;
+        return $this->append($markup);
     }
 }

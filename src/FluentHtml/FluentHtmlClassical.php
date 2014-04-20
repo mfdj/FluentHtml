@@ -9,10 +9,10 @@ use FluentHtml\Adaptor\Forms;
 use FluentHtml\Adaptor\Generics;
 use FluentHtml\Adaptor\HB5s;
 use FluentHtml\Adaptor\Inputs;
-use FluentHtml\Base\AbstractFluent;
+use FluentHtml\Base\AbstractAppend;
 use FluentHtml\Factory\Generic;
 
-class FluentHtmlClassical extends AbstractFluent
+class AppendHtmlClassical extends AbstractAppend
 {
     use Generics, Basics, Forms, Inputs, HB5s, BonusTags, BonusContainers;
 

@@ -4,9 +4,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use FluentHtml\Factory\HTML;
 use FluentHtml\FluentHtml;
-use FluentHtml\FluentHtmlClassical;
+use FluentHtml\AppendHtmlClassical;
 
-# FluentHtml and FluentHtmlClassical —
+# FluentHtml and AppendHtmlClassical —
 # same api but one is composed using classical inhertiance and
 # a FluentHtml API
 
@@ -19,7 +19,7 @@ echo FluentHtml::make('header')
         HTML::anchor('http://thecoolestsiteontheinternet.com')
     )->hr();
 
-echo FluentHtmlClassical::make('header')
+echo AppendHtmlClassical::make('header')
     ->h1('The brown quick fox bought some headphones & vinyl.')
     ->h2('The brown quick fox bought some headphones & vinyl.')
     ->h3('The brown quick fox bought some headphones & vinyl.')

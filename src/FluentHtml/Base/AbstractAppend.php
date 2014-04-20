@@ -2,10 +2,11 @@
 
 namespace FluentHtml\Base;
 
-trait Fluency
+abstract class AbstractAppend
 {
     protected $markup = '';
     protected $buffer = '';
+    protected $echo = false;
 
     /**
      * @param $markup
@@ -37,6 +38,6 @@ trait Fluency
      */
     public function modifyBuffer(callback $callback)
     {
-
+        // ToDo
     }
-}
+} 
